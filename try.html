@@ -100,7 +100,8 @@
         <button onclick="resetTimer()">Reset</button>
     </div>
     <div class="loading-bar"></div>
-
+    <audio id="buzzer" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+    
     <script>
         let timeLeft = 1500;
         let timerInterval;
@@ -110,6 +111,7 @@
             timerInterval = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
+                    document.getElementById("buzzer").play();
                     alert("Time's up!");
                 } else {
                     timeLeft--;
@@ -129,7 +131,7 @@
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
             document.getElementById("timer").textContent = 
-                ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')};
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
     </script>
 </body>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #000;
+            color: #00eaff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-image: url('https://example.com/futuristic-background.png'); /* Replace with an actual background */
+            background-size: cover;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #00eaff;
+        }
+        
+        #timer {
+            font-size: 5rem;
+            text-shadow: 0 0 20px #00eaff;
+            margin: 20px 0;
+        }
+
+        #points {
+            font-size: 2rem;
+            color: #ffcc00;
+            text-shadow: 0 0 15px #ffcc00;
+            margin-bottom: 20px;
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 15px;
+        }
+        
+        button {
+            background: transparent;
+            border: 2px solid #00eaff;
+            color: #00eaff;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            text-shadow: 0 0 10px #00eaff;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #00eaff;
+            color: #000;
+            transform: scale(1.1);
+        }
+        
+        button:active {
+            transform: scale(0.9);
+        }
+        
+        .loading-bar {
+            width: 60%;
+            height: 10px;
+            background: rgba(0, 255, 255, 0.2);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 100%;
+            background: #00eaff;
+            animation: loading 2s infinite linear;
+        }
+        
+        @keyframes loading {
+            0% { left: -40%; }
+            100% { left: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Timer</h1>
+    <div id="timer">50:00</div>
+    <div id="points">20 Points!</div>
+    <div class="button-container">
+        <button onclick="startTimer()">Start</button>
+        <button onclick="resetTimer()">Reset</button>
+    </div>
+    <div class="loading-bar"></div>
+
+    <script>
+        let timeLeft = 3000; // 50 minutes
+        let timerInterval;
+
+        function startTimer() {
+            if (timerInterval) return;
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up!");
+                } else {
+                    timeLeft--;
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timeLeft = 3000; // Reset to 50 minutes
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById("timer").textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+</html>
